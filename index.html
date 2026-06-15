@@ -1,31 +1,194 @@
-const devices = {
-    "iphone 13": {
-        general: 100,
-        redDot: 95,
-        scope2x: 85,
-        scope4x: 75,
-        awm: 50,
-        freeLook: 100,
-        os: "iOS"
-    },
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FF OB53 Sensitivity Analyzer</title>
 
-    "iphone 15 pro max": {
-        general: 100,
-        redDot: 100,
-        scope2x: 90,
-        scope4x: 80,
-        awm: 55,
-        freeLook: 100,
-        os: "iOS"
-    },
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
-    "redmi note 13": {
-        general: 95,
-        redDot: 88,
-        scope2x: 80,
-        scope4x: 70,
-        awm: 45,
-        freeLook: 90,
-        os: "Android"
-    }
-};
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#050816,#0d1b2a,#001d3d);
+overflow:hidden;
+}
+
+body::before{
+content:'';
+position:absolute;
+width:600px;
+height:600px;
+background:radial-gradient(#00ffff55,transparent);
+top:-200px;
+left:-150px;
+}
+
+body::after{
+content:'';
+position:absolute;
+width:500px;
+height:500px;
+background:radial-gradient(#00ff8855,transparent);
+bottom:-150px;
+right:-100px;
+}
+
+.container{
+width:90%;
+max-width:500px;
+padding:25px;
+backdrop-filter:blur(15px);
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,.15);
+border-radius:25px;
+box-shadow:0 0 40px #00ffff44;
+color:white;
+z-index:10;
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+color:#00ffff;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:none;
+border-radius:12px;
+background:#ffffff15;
+color:white;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:12px;
+background:linear-gradient(90deg,#00ffff,#00ff88);
+font-weight:bold;
+cursor:pointer;
+font-size:16px;
+}
+
+.result{
+display:none;
+margin-top:20px;
+padding:15px;
+border-radius:15px;
+background:#ffffff10;
+}
+
+.result div{
+margin:8px 0;
+font-size:18px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>FF OB53 Analyzer</h1>
+
+<input id="device" placeholder="Tên thiết bị">
+
+<select id="ram">
+<option>2GB</option>
+<option>4GB</option>
+<option>6GB</option>
+<option>8GB+</option>
+</select>
+
+<select id="fps">
+<option>30 FPS</option>
+<option>60 FPS</option>
+<option>90 FPS</option>
+<option>120 FPS</option>
+</select>
+
+<select id="style">
+<option>Kéo tâm</option>
+<option>One Tap</option>
+<option>Drag Headshot</option>
+</select>
+
+<button onclick="analyze()">PHÂN TÍCH</button>
+
+<div class="result" id="result">
+<div id="general"></div>
+<div id="reddot"></div>
+<div id="scope2"></div>
+<div id="scope4"></div>
+<div id="awm"></div>
+<div id="freelook"></div>
+</div>
+
+</div>
+
+<script>
+
+function analyze(){
+
+let ram=document.getElementById("ram").value;
+let fps=document.getElementById("fps").value;
+let style=document.getElementById("style").value;
+
+let general=100;
+let red=90;
+let s2=80;
+let s4=70;
+let awm=40;
+let free=90;
+
+if(ram==="2GB"){
+general-=10;
+red-=10;
+}
+
+if(fps==="90 FPS"){
+general+=15;
+red+=10;
+}
+
+if(fps==="120 FPS"){
+general+=20;
+red+=15;
+}
+
+if(style==="One Tap"){
+general+=15;
+red+=10;
+}
+
+if(style==="Drag Headshot"){
+general+=10;
+red+=5;
+}
+
+document.getElementById("general").innerHTML="🎯 General: "+general;
+document.getElementById("reddot").innerHTML="🔴 Red Dot: "+red;
+document.getElementById("scope2").innerHTML="🔭 2X Scope: "+s2;
+document.getElementById("scope4").innerHTML="📡 4X Scope: "+s4;
+document.getElementById("awm").innerHTML="💥 AWM: "+awm;
+document.getElementById("freelook").innerHTML="👀 Free Look: "+free;
+
+document.getElementById("result").style.display="block";
+}
+
+</script>
+
+</body>
+</html>
